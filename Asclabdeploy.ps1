@@ -29,7 +29,7 @@ $outputs = (New-AzResourceGroupDeployment `
       -Name AscLab101-Core `
       -ResourceGroupName $resourceGroupName `
       -TemplateUri https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-core.json `
-      -SecretName $secret.Name `
+      -SecretName $PwdSecureString `
       ).Outputs
 
 Write-Host ""
