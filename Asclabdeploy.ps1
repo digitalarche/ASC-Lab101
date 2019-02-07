@@ -1,11 +1,12 @@
 
-$location = 'canadaeast'
+# Get-AzComputeResourceSku | where {$_.Locations -icontains "centralus"}
+$location = 'canadacentral'
 $resourceGroupName = (New-AzResourceGroup -name AscLab101 -Location $location).ResourceGroupName
 
 Wait-event -Timeout 2
 Write-Host -ForegroundColor Cyan "Resource Group $resourceGroupName created... in Location $location"
 
-$PwdSecureString = Read-Host -assecurestring "Please enter the password as you want for your ASC-Lab101 :)"
+$PwdSecureString = Read-Host -assecurestring "Please enter the password as you want for your ASC-Lab101 ;)  "
 $decodePwdSecureString = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PwdSecureString))
 
 $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
