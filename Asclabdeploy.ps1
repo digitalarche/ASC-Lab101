@@ -1,40 +1,13 @@
 
-
 $location = 'canadaeast'
-$vaultName = "keyvault-" + -join ((97..122) | Get-Random -Count 10 | ForEach-Object {[char]$_})
 $resourceGroupName = (New-AzResourceGroup -name AscLab101 -Location $location).ResourceGroupName
 
 Wait-event -Timeout 2
 Write-Host -ForegroundColor Cyan "Resource Group $resourceGroupName created... in Location $location"
 
-$keyVault = New-AzKeyVault `
-   -VaultName $vaultName `
-   -ResourceGroupName $resourceGroupName `
-   -Location $location `
-   -EnabledForDeployment `
-   -EnabledForTemplateDeployment  `
-   -EnabledForDiskEncryption  `
-   -EnableSoftDelete  `
-   -Sku Standard
-
-Wait-event -Timeout 3
-Write-Host ""
-Write-Host -ForegroundColor Cyan "Keyvault $vaultName created... in $resourceGroupName"
-
-
-# $secretValue = ConvertTo-SecureString 'AscLab101R0cks' -AsPlainText -Force
 $PwdSecureString = Read-Host -assecurestring "Please enter the password as you want for your ASC-Lab101 :)"
 $decodePwdSecureString = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PwdSecureString))
 
-$secret = Set-AzureKeyVaultSecret `
-      -VaultName $vaultName `
-      -Name 'labuser' `
-      -SecretValue $PwdSecureString
-
-Write-Host ""
-Write-Host -ForegroundColor Red "Keyvault secret set..."
-Wait-event -Timeout 3
-      
 $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
 $PasswordProfile.Password = $decodePwdSecureString
 $PasswordProfile.ForceChangePasswordNextLogin = "False"
@@ -56,9 +29,7 @@ $outputs = (New-AzResourceGroupDeployment `
       -Name AscLab101-Core `
       -ResourceGroupName $resourceGroupName `
       -TemplateUri https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-core.json `
-      -VaultName $vaultName `
       -SecretName $secret.Name `
-      -VaultResourceGroup $resourceGroupName `
       ).Outputs
 
 Write-Host ""
