@@ -1,13 +1,14 @@
-﻿# Azure Infrastructure Security Lab
+﻿# Azure Infrastructure for ASC LAB 
 **Author** [Franck D. - Digital Archeology](https://aka.ms/mcra)
 
 **This repository is currently in preview. PowerShell scripts and ARM templates are still in development, do not use them in production!**
 
 # Content
-This repository contains PowerShell scripts and ARM templates that are used to automatically deploy an Azure hands-on lab environment.
-1. [Prerequisites](https://raw.githubusercontent.com/digitalarche/ASC-Lab101/master/README.md#prerequisites)
-2. [Background information](https://raw.githubusercontent.com/digitalarche/ASC-Lab101/master/README.md#background-information)
-3. [Initial lab deployment](https://raw.githubusercontent.com/digitalarche/ASC-Lab101/master/README.md#initial-lab-deployment)
+This repository contains PowerShell script that are used to automatically deploy an Azure hands-on lab environment.
+
+1. [Prerequisites](https://github.com/digitalarche/ASC-Lab101#prerequisites)
+2. [Background information](https://github.com/digitalarche/ASC-Lab101#background-information)
+3. [Initial lab deployment](https://github.com/digitalarche/ASC-Lab101#initial-lab-deployment)
 
 ## Prerequisites
 To be able to attend the workshop and complete all hands-on demos, a valid Azure subscription is required. 
