@@ -59,7 +59,8 @@ $blobs = (Get-AzStorageBlob -Context $sourceStorageContext -Container $sourceSto
 
 $destStorageAccount = $outputs.storageAccountName.Value
 Write-Host ""
-Write-Host -ForegroundColor Green $outputs.storageAccountName.Value
+Write-Host "The name of you storage account: " -ForegroundColor Cyan -NoNewline 
+Write-Host $outputs.storageAccountName.Value -ForegroundColor Green 
 
 $destStorageKey = (Get-AzStorageAccountKey -ResourceGroupName $resourceGroupName -Name $destStorageAccount).value[0]
 $destStorageContext = New-AzStorageContext –StorageAccountName $destStorageAccount -StorageAccountKey $destStorageKey
