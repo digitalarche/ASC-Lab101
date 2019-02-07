@@ -1,4 +1,17 @@
 
+function Show-Disclosure {
+      Write-host ""
+      Write-Host "    ___   _____ ______   __    ___    ____ " -ForegroundColor Green
+      Write-Host "   /   | / ___// ____/  / /   /   |  / __ )" -ForegroundColor Green
+      Write-Host "  / /| | \__ \/ /      / /   / /| | / __  |" -ForegroundColor Green
+      Write-Host " / ___ |___/ / /___   / /___/ ___ |/ /_/ / " -ForegroundColor Green
+      Write-Host "/_/  |_/____/\____/  /_____/_/  |_/_____/  vs 1.0" -ForegroundColor Green
+      Write-Host "ASC LAB 101 - A journey to the heart of Cloud security " -ForegroundColor Cyan
+      Write-Host "[RTFM - always before!]" -ForegroundColor Red
+      Write-host ""
+  }
+
+Show-Disclosure
 # Get-AzComputeResourceSku | where {$_.Locations -icontains "centralus"}
 $location = 'canadacentral'
 $resourceGroupName = (New-AzResourceGroup -name AscLab101 -Location $location).ResourceGroupName
