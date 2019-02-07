@@ -26,7 +26,7 @@ Write-Host ""
 Write-Host -ForegroundColor Magenta "Deployment started (Take a moment almost 20-30mn) ..."
 
 $outputs = (New-AzResourceGroupDeployment `
-      -Name AscLab101-Core `
+      -Name asclab101 `
       -ResourceGroupName $resourceGroupName `
       -TemplateUri https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-core.json `
       -SecretName $PwdSecureString `
