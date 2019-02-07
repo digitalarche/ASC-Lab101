@@ -45,7 +45,10 @@ $sourceStorageContainer = 'labfiles'
 $blobs = (Get-AzStorageBlob -Context $sourceStorageContext -Container $sourceStorageContainer)
 
 $destStorageAccount = $outputs.storageAccountName.Value
-$destStorageKey = (Get-AzStorageAccountKey -ResourceGroupName $resourceGroupName -accountName $destStorageAccount).value[0]
+Write-Host ""
+Write-Host -ForegroundColor Green $outputs.storageAccountName.Value
+
+$destStorageKey = (Get-AzStorageAccountKey -ResourceGroupName $resourceGroupName -Name $destStorageAccount).value[0]
 $destStorageContext = New-AzStorageContext –StorageAccountName $destStorageAccount -StorageAccountKey $destStorageKey
 
 $destStorageContainer = (New-AzStorageContainer -Name labfiles -permission Container -context $destStorageContext).name
