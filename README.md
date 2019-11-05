@@ -47,4 +47,10 @@ All user names and password for the environment are set to **labuser / and yours
 $script = Invoke-WebRequest https://raw.githubusercontent.com/digitalarche/ASC-Lab101/master/Asclabdeploy.ps1 -UseBasicParsing
 Invoke-Expression $($script.Content)
 ```
+
+```powershell  Script without user create
+$script = Invoke-WebRequest https://raw.githubusercontent.com/digitalarche/ASC-Lab101/master/Asclabhq101.ps1 -UseBasicParsing
+Invoke-Expression $($script.Content)
+```
+
 The deployment takes up to 20 minutes. After the deployment has finished you will be informed in the PowerShell windows.
