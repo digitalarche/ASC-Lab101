@@ -15,13 +15,15 @@ Show-Disclosure
 # Get-AzComputeResourceSku | where {$_.Locations -icontains "centralus"}
 $location = 'canadacentral'
 $guidRandom = [Guid]::NewGuid().ToString("N").Substring(0,6)
-$rgNameRandom = "rg-hqlab$($guidRandom)"
+
+$nameRandomLab = Read-Host "Please enter your name that you want for your Labs: "
+$rgNameRandom = "rg-hqlab$($nameRandomLab)"
 $resourceGroupName = (New-AzResourceGroup -name $rgNameRandom -Location $location).ResourceGroupName
 
 Wait-event -Timeout 2
 Write-Host -ForegroundColor Cyan "Resource Group $resourceGroupName created... in Location $location"
 
-$PwdSecureString = Read-Host -assecurestring "Please enter the password as you want for your ASC-Lab101 ;) "
+$pwdSecureString = Read-Host -assecurestring "Please enter the password as you want for your ASC-Lab101 ;) "
 $decodePwdSecureString = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PwdSecureString))
 
 $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
@@ -41,11 +43,13 @@ $tenant = (Get-AzureADTenantDetail).verifiedDomains.name
 Write-Host ""
 Write-Host -ForegroundColor Magenta "Deployment started (Take a moment almost 20-25mn) ..."
 
+$deployRandom = "deploy-$($guidRandom)"
 $outputs = (New-AzResourceGroupDeployment `
-      -Name asclab101 `
+      -Name $deployRandom `
       -ResourceGroupName $resourceGroupName `
       -TemplateUri https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-core.json `
-      -SecretName $PwdSecureString `
+      -SecretName $pwdSecureString `
+      -NameRandomLab $nameRandomLab `
       ).Outputs
 
 Write-Host ""

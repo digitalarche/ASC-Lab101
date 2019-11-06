@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "secretName": {
+        "type": "securestring",
+        "metadata": {
+            "description": ""
+        }
+    }
+    },
+    "resources": [
+    {
+      "apiVersion": "2015-01-01",
+      "name": "AscLab101IaaS",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-infra.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "adminPassword":{"value": "[parameters('secretName')]"}
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "AscLab101PaaS",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-paas.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "sqlAdministratorLoginPassword":{"value": "[parameters('secretName')]"}
+        }
+      }
+    }],
+    "outputs": {
+        "storageAccountName": {
+            "type": "string",
+            "value": "[reference('AscLab101IaaS').outputs.storageAccountName.value]"
+        }
+    }
+}

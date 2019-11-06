@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "secretName": {
+        "type": "securestring",
+        "metadata": {
+            "description": ""
+        }
+      },
+      "NameRandomLab": {
+        "type": "string",
+        "metadata": {
+            "description": ""
+        }
+      }
+    },
+    "variables": {
+        "deployPrefixIaaS": "AscLabIaaS",
+        "deployPrefixPaaS": "AscLabPaaS",
+        "deployNameIaaS": "[toLower(concat(variables('deployPrefixIaaS'), parameters('NameRandomLab')))]",
+        "deployNamePaaS": "[toLower(concat(variables('deployPrefixPaaS'), parameters('NameRandomLab')))]"
+    },
+    "resources": [
+    {
+      "apiVersion": "2015-01-01",
+      "name": "[variables('deployNameIaaS')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-infra.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+            "adminPassword":{"value": "[parameters('secretName')]"},
+            "randomLabInfra":{"value": "[parameters('NameRandomLab')]"}
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "[variables('deployNamePaaS')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://asclab101.blob.core.windows.net/azuredeploy/azuredeploy-paas.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "sqlAdministratorLoginPassword":{"value": "[parameters('secretName')]"},
+          "randomLabPaas":{"value": "[parameters('NameRandomLab')]"}
+        }
+      }
+    }],
+    "outputs": {
+        "storageAccountName": {
+            "type": "string",
+            "value": "[reference(variables('deployNameIaaS')).outputs.storageAccountName.value]"
+        }
+    }
+}
